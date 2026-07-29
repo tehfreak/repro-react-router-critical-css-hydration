@@ -1,0 +1,51 @@
+name: reproduce
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
+
+      - run: npm run typecheck
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run repro | tee repro.out
+
+      - name: assert verdicts
+        run: |
+          grep -qx 'VERDICT flag-on: BROKEN' repro.out
+          grep -qx 'VERDICT flag-off: WORKS' repro.out
+
+  react19:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
+
+      - run: npm install --no-save react@19.2.8 react-dom@19.2.8
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run repro | tee repro19.out
+
+      - name: assert verdicts
+        run: |
+          grep -qx 'VERDICT flag-on: WORKS' repro19.out
+          grep -qx 'VERDICT flag-off: WORKS' repro19.out
