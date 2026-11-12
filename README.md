@@ -2,9 +2,13 @@
 
 ## Status
 
-Observed against react-router 7.18.2 on React 18. Reported upstream as
-https://github.com/remix-run/react-router/issues/15363, unassigned. No existing issue or PR covered
-it when it was filed.
+Fixed upstream, not released yet. https://github.com/remix-run/react-router/issues/15363 was closed
+on 2026-11-11 by https://github.com/remix-run/react-router/pull/15747 on the v7 branch and
+https://github.com/remix-run/react-router/pull/15382 on main. Both wrap the reset in
+`React.startTransition`, the fix suggested below. As of 2026-11-12 the latest releases are 7.18.5
+and 8.5.1, both from before the fix.
+
+Observed against react-router 7.18.2 on React 18.
 
 It needs React 18. React 19 dropped the per boundary hydration error this depends on, so the same
 app on react-router 7.18.2 with react 19.2.8 is clean. react-router 8.3.0 requires react >= 19.2.7,
@@ -33,8 +37,8 @@ https://github.com/remix-run/react-router/blob/246c1247a2c34f992ef50fec9040d1cbe
   }, []);
 ```
 
-So main still fires an unconditional non transition update at the root of every dev page, for every
-app. React 19 absorbs it. The suggested fix below covers both branches.
+So 8.3.0 still fires an unconditional non transition update at the root of every dev page, for
+every app. React 19 absorbs it.
 
 ## What happens
 
