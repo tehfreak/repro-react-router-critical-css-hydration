@@ -2,11 +2,14 @@
 
 ## Status
 
-Fixed upstream, not released yet. https://github.com/remix-run/react-router/issues/15363 was closed
-on 2026-11-11 by https://github.com/remix-run/react-router/pull/15747 on the v7 branch and
+Fixed upstream in 7.18.6 and 8.5.2, both released on 2026-11-18.
+https://github.com/remix-run/react-router/issues/15363 was closed on 2026-11-11 by
+https://github.com/remix-run/react-router/pull/15747 on the v7 branch and
 https://github.com/remix-run/react-router/pull/15382 on main. Both wrap the reset in
-`React.startTransition`, the fix suggested below. As of 2026-11-12 the latest releases are 7.18.5
-and 8.5.1, both from before the fix.
+`React.startTransition`, the fix suggested below.
+
+Checked on 7.18.6 with React 18.3.1, both verdicts are WORKS. The repo stays pinned to 7.18.2 so
+CI keeps showing the bug.
 
 Observed against react-router 7.18.2 on React 18.
 
